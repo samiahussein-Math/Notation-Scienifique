@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puissance dix — La notation scientifique · Classe de 9ᵉ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600;1,9..144,900&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#F4EFE2; --card:#FCFAF1; --ink:#242015; --ink2:#716855;
+    --line:#D9D0BA; --accent:#C6431D; --accent-d:#A23413;
+    --green:#2E7D5B; --greenbg:#E7F0E3; --redbg:#F7E6DD;
+    --mono:'IBM Plex Mono',monospace; --sans:'IBM Plex Sans',sans-serif; --serif:'Fraunces',serif;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper); color:var(--ink); font-family:var(--sans);
+    -webkit-font-smoothing:antialiased; min-height:100vh;
+  }
+  body::before{
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  }
+  .crop{position:fixed;width:16px;height:16px;pointer-events:none;z-index:6;opacity:.55}
+  .crop.tl{top:10px;left:10px;border-top:1.5px solid #A99A79;border-left:1.5px solid #A99A79}
+  .crop.tr{top:10px;right:10px;border-top:1.5px solid #A99A79;border-right:1.5px solid #A99A79}
+  .crop.bl{bottom:10px;left:10px;border-bottom:1.5px solid #A99A79;border-left:1.5px solid #A99A79}
+  .crop.br{bottom:10px;right:10px;border-bottom:1.5px solid #A99A79;border-right:1.5px solid #A99A79}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:38px 24px 70px;position:relative;z-index:1}
+  .mono{font-family:var(--mono)}
+  sup{font-size:.55em}
+  b{font-weight:700}
+
+  .kicker{font:600 11px var(--mono);letter-spacing:.24em;color:var(--ink2);text-transform:uppercase}
+  .kicker b{color:var(--accent);font-weight:600}
+  h1{font:900 clamp(42px,7vw,74px)/1.02 var(--serif);letter-spacing:-.01em;margin:10px 0 12px}
+  h1 em{font-style:italic;color:var(--accent)}
+  .tagline{font-size:15.5px;color:var(--ink2);max-width:720px;line-height:1.55}
+  .tagline .formula{font-family:var(--mono);color:var(--ink);font-weight:600;background:var(--card);border:1px solid var(--line);padding:2px 9px;border-radius:3px;white-space:nowrap}
+  .tagline .formula u{text-decoration:none;color:var(--accent);border-bottom:2px solid var(--accent)}
+  .rule2{margin:22px 0 20px;border-top:2px solid var(--ink)}
+  .rule2::after{content:'';display:block;border-top:1px solid var(--ink);margin-top:3px}
+
+  .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{
+    display:inline-flex;align-items:center;gap:10px;cursor:pointer;
+    font:600 12px var(--mono);letter-spacing:.09em;text-transform:uppercase;
+    background:var(--card);color:var(--ink);border:1.5px solid var(--ink);
+    padding:12px 18px;box-shadow:4px 4px 0 rgba(36,32,21,.14);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .tab i{font-style:normal;color:var(--accent);font-weight:700}
+  .tab:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 rgba(36,32,21,.18)}
+  .tab:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(36,32,21,.18)}
+  .tab.on{background:var(--ink);color:var(--paper)}
+  .tab.on i{color:#E8663A}
+
+  .view[hidden]{display:none}
+  .view.in{animation:fadeUp .35s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .panel{background:var(--card);border:1.5px solid var(--ink);box-shadow:6px 6px 0 rgba(36,32,21,.10);padding:20px 22px}
+  .panel-tag{font:600 10.5px var(--mono);letter-spacing:.2em;color:var(--ink2);text-transform:uppercase;
+    border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:14px}
+  .acc{color:var(--accent)}
+
+  /* ---------- LABO ---------- */
+  .lab-head{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:stretch;margin-bottom:16px}
+  .lab-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .nav-arrow{width:40px;height:40px;border:1.5px solid var(--ink);background:var(--card);cursor:pointer;
+    display:grid;place-items:center;color:var(--ink);transition:.12s}
+  .nav-arrow:hover{background:var(--ink);color:var(--paper)}
+  .nav-arrow svg{width:17px;height:17px}
+  .lab-id{display:flex;flex-direction:column;gap:3px;min-width:200px}
+  .lab-cat{font:600 10px var(--mono);letter-spacing:.22em;color:var(--accent)}
+  .lab-label{font:600 23px/1.15 var(--serif)}
+  .lab-count{margin-left:auto;font:600 12px var(--mono);color:var(--ink2);align-self:flex-start;border:1px solid var(--line);padding:4px 9px}
+  .lab-goal{border-left:2px solid var(--accent);padding:4px 0 4px 16px;font-size:13.5px;line-height:1.55;color:var(--ink2);display:flex;flex-direction:column;justify-content:center}
+  .lab-goal b{color:var(--ink)}
+  .lab-goal .gk{font:600 10px var(--mono);letter-spacing:.2em;color:var(--accent);margin-bottom:5px}
+
+  .stage{margin-bottom:16px;overflow-x:auto}
+  .stage:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px}
+  .cells{position:relative;display:inline-flex;gap:12px;padding:32px 64px 42px 66px;min-width:100%}
+  .dig{
+    width:54px;height:62px;display:grid;place-items:center;flex:none;
+    background:#FFFDF4;border:1.5px solid var(--line);
+    font:600 27px var(--mono);color:var(--ink);
+  }
+  .dig.z{color:#BFB299}
+  .comma{position:absolute;top:56px;width:34px;margin-left:-17px;cursor:grab;touch-action:none;
+    display:flex;align-items:flex-start;justify-content:center;user-select:none;-webkit-user-select:none;
+    transition:left .22s cubic-bezier(.3,1.5,.4,1);outline:none}
+  .comma.drag{transition:none;cursor:grabbing}
+  .comma .lead{display:none;font:600 25px var(--mono);color:var(--accent);line-height:1;margin:26px 1px 0 0}
+  .comma.lead0{width:48px;margin-left:-24px;justify-content:flex-end}
+  .comma.lead0 .lead{display:block}
+  .cgl{display:block;fill:var(--accent);transition:transform .15s}
+  .comma:hover .cgl,.comma.drag .cgl{transform:scale(1.12)}
+  .hnd{position:absolute;top:-24px;left:0;right:0;display:flex;justify-content:center;gap:2px;opacity:0;transition:opacity .2s}
+  .hnd svg{width:12px;height:12px;stroke:var(--accent);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .comma:hover .hnd,.comma.drag .hnd,.comma.wig .hnd{opacity:.9}
+  .comma.wig{animation:wig 1.1s ease-in-out 3}
+  @keyframes wig{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  .stage-read{font:500 13px var(--mono);color:var(--ink2);padding:0 8px 2px 6px}
+  .stage-read b{color:var(--ink);font-weight:600}
+  .stage-hint{font:600 10px var(--mono);letter-spacing:.16em;color:var(--accent);text-transform:uppercase;padding:6px 8px 0}
+
+  .lab-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+  .sci{position:relative}
+  .sci-eq{display:flex;align-items:baseline;gap:14px;font-family:var(--mono);flex-wrap:wrap;padding:4px 0 2px}
+  .sci-a{font-size:34px;font-weight:600;word-break:break-word}
+  .sci-mul{font-size:28px;color:var(--ink2)}
+  .sci-pow{font-size:32px;font-weight:600}
+  .sci-pow sup{color:var(--accent);font-weight:700;display:inline-block}
+  .sci-pow.pop sup{animation:pop .32s ease}
+  @keyframes pop{0%{transform:scale(1.45)}100%{transform:scale(1)}}
+  .sci-sub{font:500 12px var(--mono);color:var(--ink2);margin:6px 0 14px;line-height:1.5}
+  .sci-expand{font:600 15px var(--mono);border:1.5px dashed var(--line);display:inline-block;padding:8px 14px;background:#FFFDF4}
+  .jump{margin-top:16px;border-top:1.5px dashed var(--line);padding-top:13px;font-size:14px;line-height:1.6;color:var(--ink2)}
+  .jump b{color:var(--ink)}
+  .jump .jarrow{color:var(--accent);font-weight:700}
+  .win-line{margin-top:10px;background:var(--greenbg);border:1.5px solid var(--green);color:var(--ink);
+    font:600 15.5px var(--mono);padding:10px 14px;animation:fadeUp .3s ease both}
+  .stamp{
+    position:absolute;top:16px;right:16px;transform:rotate(-8deg) scale(1.5);opacity:0;pointer-events:none;
+    border:2.5px solid var(--green);outline:1.5px solid var(--green);outline-offset:3px;
+    color:var(--green);padding:8px 13px;text-align:center;
+  }
+  .stamp .s1{display:block;font:700 11.5px var(--mono);letter-spacing:.18em}
+  .stamp .s2{display:block;font:600 9px var(--mono);letter-spacing:.34em;margin-top:3px}
+  .stamp.on{animation:stampIn .38s cubic-bezier(.2,1.6,.4,1) both}
+  @keyframes stampIn{
+    0%{opacity:0;transform:rotate(-8deg) scale(1.6)}
+    60%{opacity:1;transform:rotate(-8deg) scale(.93)}
+    100%{opacity:1;transform:rotate(-8deg) scale(1)}
+  }
+
+  .gauge{height:98px;position:relative;margin-top:8px}
+  .gz{position:absolute;top:38px;height:14px}
+  .gz-n{left:0;width:50%;background:rgba(113,104,85,.12)}
+  .gz-p{left:50%;width:50%;background:rgba(198,67,29,.10)}
+  .gz span{position:absolute;left:50%;transform:translateX(-50%);top:-17px;white-space:nowrap;
+    font:600 9.5px var(--mono);letter-spacing:.08em;color:var(--ink2)}
+  .gaxis{position:absolute;top:60px;left:0;right:0;height:2px;background:var(--ink)}
+  .gtick{position:absolute;top:54px;width:1.5px;height:13px;background:#B9AC8D;transform:translateX(-50%)}
+  .glab{position:absolute;top:73px;transform:translateX(-50%);font:500 10px var(--mono);color:var(--ink2)}
+  .gtarget{position:absolute;top:56px;width:11px;height:11px;border:2.5px solid var(--accent);border-radius:50%;
+    background:var(--card);transform:translateX(-50%);transition:left .3s cubic-bezier(.3,1.3,.4,1)}
+  .gtarget::after{content:'cible';position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+    font:700 9px var(--mono);letter-spacing:.14em;color:var(--accent)}
+  .gcursor{position:absolute;top:40px;width:0;height:0;transform:translateX(-50%);
+    border-left:7px solid transparent;border-right:7px solid transparent;border-top:11px solid var(--ink);
+    transition:left .28s cubic-bezier(.3,1.4,.4,1)}
+  .gcursor::after{content:'';position:absolute;left:-1px;top:-32px;width:2px;height:22px;background:var(--ink)}
+  .rule-box{margin-top:18px;border-top:1.5px dashed var(--line);padding-top:12px;font-size:13.5px;line-height:1.6;color:var(--ink2)}
+  .rule-box b{color:var(--accent);font-family:var(--mono)}
+
+  /* ---------- ENTRAÎNEMENT ---------- */
+  .train-grid{display:grid;grid-template-columns:1fr 262px;gap:16px;align-items:start}
+  .q-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .q-no{font:600 11px var(--mono);letter-spacing:.14em;color:var(--accent)}
+  .q-body{font:600 clamp(26px,4.4vw,42px)/1.25 var(--mono);margin:20px 0 8px;word-break:break-word}
+  .q-body .q-tail{color:var(--ink2);font-size:.62em;font-weight:500}
+  .q-form{margin-top:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .sci-in{display:flex;align-items:baseline;gap:12px;font-family:var(--mono)}
+  .sci-in .mul{font-size:24px;color:var(--ink2)}
+  .sci-in .ten{font-size:26px;font-weight:600}
+  .sci-in sup{display:inline-block}
+  .q-form input,.fl-form input{
+    background:#FFFDF4;border:none;border-bottom:2.5px solid var(--ink);
+    font-family:var(--mono);font-weight:600;text-align:center;color:var(--ink);padding:6px 8px}
+  .q-form input:focus,.fl-form input:focus{outline:none;border-color:var(--accent);background:#fff}
+  .q-form input::placeholder,.fl-form input::placeholder{color:#C4B89D;font-weight:400}
+  .q-form input:disabled,.fl-form input:disabled{color:var(--ink2);border-color:var(--line)}
+  #fA,#flA{width:120px;font-size:27px}
+  #fN,#flN{width:62px;font-size:21px;position:relative;top:-9px}
+  .shake{animation:shake .3s}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+    font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;
+    background:var(--card);color:var(--ink);border:1.5px solid var(--ink);padding:13px 20px;
+    box-shadow:4px 4px 0 rgba(36,32,21,.16);transition:transform .12s,box-shadow .12s}
+  .btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .btn svg.f{fill:currentColor;stroke:none}
+  .btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 rgba(36,32,21,.2)}
+  .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(36,32,21,.16)}
+  .btn-ink{background:var(--ink);color:var(--paper)}
+  .btn-ink:hover{background:var(--accent-d);border-color:var(--accent-d)}
+  .btn.big{padding:17px 28px;font-size:14px}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  .q-fb{margin-top:18px;border:1.5px solid;padding:16px 18px;animation:fadeUp .28s ease both}
+  .q-fb.good{border-color:var(--green);background:var(--greenbg)}
+  .q-fb.bad{border-color:var(--accent);background:var(--redbg)}
+  .fb-t{display:flex;align-items:center;gap:9px;font:700 15px var(--mono);letter-spacing:.04em}
+  .fb-t svg{width:18px;height:18px;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .good .fb-t{color:var(--green)} .good .fb-t svg{stroke:var(--green)}
+  .bad .fb-t{color:var(--accent-d)} .bad .fb-t svg{stroke:var(--accent-d)}
+  .steps{margin:12px 0 0;padding:0;list-style:none;counter-reset:st}
+  .steps li{counter-increment:st;position:relative;padding:5px 0 5px 33px;font-size:14px;line-height:1.55}
+  .steps li::before{content:counter(st);position:absolute;left:0;top:7px;width:22px;height:22px;
+    border:1.5px solid currentColor;border-radius:50%;display:grid;place-items:center;font:600 11px var(--mono)}
+  .good .steps li{color:#1E5741} .bad .steps li{color:#7C3216}
+  .fb-a{margin-top:12px;font:600 15.5px var(--mono);border-top:1.5px dashed rgba(0,0,0,.15);padding-top:11px}
+  .q-fb .btn{margin-top:14px}
+  .side{position:sticky;top:20px}
+  .stat{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .stat span{font-size:13px;color:var(--ink2)}
+  .stat b{font:700 24px var(--mono)}
+  .dots{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;min-height:15px}
+  .dots i{width:13px;height:13px;border:1.5px solid var(--ink)}
+  .dots i.g{background:var(--green);border-color:var(--green)}
+  .dots i.b{background:var(--accent);border-color:var(--accent)}
+  .side-tip{margin-top:16px;font-size:12.5px;line-height:1.55;color:var(--ink2);border-left:2px solid var(--accent);padding-left:12px}
+
+  /* ---------- DÉFI ÉCLAIR ---------- */
+  .fl-wrap{max-width:760px;margin:0 auto}
+  .fl-intro h2{font:600 30px/1.2 var(--serif);margin-bottom:10px}
+  .fl-intro p{font-size:14.5px;line-height:1.6;color:var(--ink2);margin-bottom:20px}
+  .fl-intro p b{color:var(--ink)}
+  .fl-top{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+  .fl-bar{flex:1;height:9px;border:1.5px solid var(--ink);background:var(--card)}
+  .fl-bar i{display:block;height:100%;background:var(--accent);width:100%;transition:width .1s linear}
+  .fl-bar.low i{animation:blink .5s steps(2) infinite}
+  @keyframes blink{50%{opacity:.35}}
+  .fl-clock{font:700 19px var(--mono);min-width:92px;text-align:right}
+  .fl-score{font:600 12px var(--mono);letter-spacing:.1em;color:var(--ink2);text-transform:uppercase}
+  .fl-score b{color:var(--ink);font-size:17px;margin-left:5px}
+  .fl-q{font:600 clamp(26px,5vw,44px)/1.25 var(--mono);text-align:center;margin:22px 0 20px;word-break:break-word}
+  .fl-form{display:flex;justify-content:center;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:16px}
+  .fl-fb{min-height:24px;text-align:center;font:600 14px var(--mono);line-height:1.5;
+    padding:10px 14px;border:1.5px solid;margin-bottom:16px;animation:fadeUp .25s ease both}
+  .fl-fb.good{border-color:var(--green);background:var(--greenbg);color:#1E5741}
+  .fl-fb.bad{border-color:var(--accent);background:var(--redbg);color:#7C3216}
+  .fl-fb[hidden]{display:none}
+  .fl-next-row{display:flex;justify-content:center;min-height:50px}
+  .fl-end{text-align:center;padding:34px 24px}
+  .fl-big{font:700 74px/1 var(--mono);margin:14px 0 6px}
+  .fl-end p{font-size:15px;color:var(--ink2);line-height:1.6}
+  .fl-rec{font:600 13px var(--mono);color:var(--accent);letter-spacing:.06em;margin-top:6px !important}
+  .fl-actions{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+
+  footer{margin-top:44px;text-align:center;font:500 11.5px var(--mono);letter-spacing:.12em;color:var(--ink2)}
+  footer span{color:var(--accent)}
+
+  @media (max-width:920px){
+    .lab-head{grid-template-columns:1fr}
+    .lab-goal{border-left:none;border-top:1.5px dashed var(--line);padding:12px 0 0}
+    .lab-grid,.train-grid{grid-template-columns:1fr}
+    .side{position:static}
+    .dig{width:41px;height:52px;font-size:21px}
+    .comma{top:50px}
+    .cells{padding:32px 40px 42px 56px}
+    #fA,#flA{width:92px;font-size:22px}
+    #fN,#flN{width:52px;font-size:18px}
+  }
+</style>
+</head>
+<body>
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5l12 7.5-12 7.5z"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1M3.5 4.5V10H9"/></symbol>
+</svg>
+
+<span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">Fiche d’activité <b>n° 9</b> — Mathématiques · Classe de 9<sup>e</sup></div>
+    <h1>Puissance <em>dix</em></h1>
+    <p class="tagline">La notation scientifique d’un nombre positif, manipulée en vrai :
+      <span class="formula">N = <u>a</u> × 10<sup style="font-size:.7em"><u>n</u></sup></span>
+      avec <b style="font-family:var(--mono)">1 ≤ a &lt; 10</b> et <b style="font-family:var(--mono)">n</b> entier.</p>
+    <div class="rule2"></div>
+    <nav class="tabs" role="tablist">
+      <button class="tab on" data-v="lab"><i>01</i>Le labo de la virgule</button>
+      <button class="tab" data-v="train"><i>02</i>Entraînement</button>
+      <button class="tab" data-v="flash"><i>03</i>Défi éclair · 3 min</button>
+    </nav>
+  </header>
+
+  <!-- ================= 01 · LABO ================= -->
+  <section class="view in" id="view-lab">
+    <div class="lab-head panel">
+      <div class="lab-meta">
+        <button class="nav-arrow" id="labPrev" aria-label="Nombre précédent"><svg><use href="#i-left"/></svg></button>
+        <div class="lab-id">
+          <span class="lab-cat" id="labCat"></span>
+          <span class="lab-label" id="labLabel"></span>
+          <span class="stage-read">valeur de départ : <b id="labValue"></b></span>
+        </div>
+        <button class="nav-arrow" id="labNext" aria-label="Nombre suivant"><svg><use href="#i-right"/></svg></button>
+        <span class="lab-count" id="labCount"></span>
+      </div>
+      <div class="lab-goal" id="labGoal">
+        <span class="gk">CONSIGNE</span>
+        <span>Attrape la virgule et déplace-la pour qu’il ne reste qu’<b>un seul chiffre non nul</b> avant elle.</span>
+      </div>
+    </div>
+
+    <div class="stage panel" id="stage" tabindex="0" role="slider"
+         aria-label="Position de la virgule — utilise les flèches gauche et droite">
+      <div class="cells" id="cells">
+        <div class="comma" id="comma" title="Fais glisser la virgule">
+          <span class="hnd">
+            <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+          </span>
+          <span class="lead">0</span>
+          <svg class="cgl" viewBox="0 0 22 32" width="21" height="30" aria-hidden="true">
+            <circle cx="11" cy="10" r="9"/>
+            <path d="M10.4 16.6C9.8 21.6 7.2 25.6 2.9 28.1l1.4 2.1C11.8 27.2 17.2 21.6 17.6 14.4 15.2 16 12.2 16.9 10.4 16.6Z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="stage-read">valeur affichée : <b id="stageRead"></b></div>
+      <div class="stage-hint">← attrape la virgule, tire-la (ou flèches ← →) →</div>
+    </div>
+
+    <div class="lab-grid">
+      <div class="sci panel">
+        <div class="panel-tag">Décomposition · a × 10ⁿ</div>
+        <div class="sci-eq" id="expWrap">
+          <span class="sci-a" id="expA"></span>
+          <span class="sci-mul">×</span>
+          <span class="sci-pow">10<sup id="expVal">0</sup></span>
+        </div>
+        <div class="sci-sub">n = nombre de rangs dont la virgule vient de sauter · (valeur affichée) × 10ⁿ = nombre de départ</div>
+        <div class="sci-expand" id="sciExpand"></div>
+        <div class="jump" id="jumpLine"></div>
+        <div class="stamp" id="stamp"><span class="s1">NOTATION SCIENTIFIQUE</span><span class="s2">· VALIDÉE ·</span></div>
+      </div>
+      <div class="panel">
+        <div class="panel-tag">L’exposant n sur la règle des puissances</div>
+        <div class="gauge" id="gauge">
+          <div class="gz gz-n"><span>n &lt; 0 · plus petit que 1</span></div>
+          <div class="gz gz-p"><span>n &gt; 0 · grand nombre</span></div>
+          <div class="gaxis"></div>
+          <div class="gtarget" id="gTarget"></div>
+          <div class="gcursor" id="gCursor"></div>
+        </div>
+        <div class="rule-box">Règle d’or : le facteur <b>a</b> vérifie toujours <b>1 ≤ a &lt; 10</b> — un seul chiffre non nul avant la virgule, jamais zéro, jamais dix.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 · ENTRAÎNEMENT ================= -->
+  <section class="view" id="view-train" hidden>
+    <div class="train-grid">
+      <div>
+        <div class="panel">
+          <div class="q-head">
+            <span class="panel-tag" id="qKind" style="border:none;padding:0;margin:0">Écris ce nombre en notation scientifique</span>
+            <span class="q-no" id="qNo"></span>
+          </div>
+          <div class="q-body" id="qBody"></div>
+          <div class="q-form" id="qForm"></div>
+          <div class="q-fb" id="qFb" hidden></div>
+        </div>
+      </div>
+      <aside class="side panel">
+        <div class="panel-tag">Tableau de bord</div>
+        <div class="stat"><span>Score</span><b id="tScore">0</b></div>
+        <div class="stat"><span>Série en cours</span><b id="tStreak">0</b></div>
+        <div class="stat" style="border:none"><span>Précision</span><b id="tAcc">—</b></div>
+        <div class="panel-tag" style="margin-top:16px">Dernières réponses</div>
+        <div class="dots" id="tDots"></div>
+        <p class="side-tip">Mémo : virgule poussée vers la <b>gauche</b> → exposant <b>positif</b> ; virgule tirée vers la <b>droite</b> → exposant <b>négatif</b>.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= 03 · DÉFI ÉCLAIR ================= -->
+  <section class="view" id="view-flash" hidden>
+    <div class="fl-wrap">
+      <div class="fl-intro panel" id="flIntro">
+        <div class="panel-tag">Défi éclair</div>
+        <h2>3 minutes, un maximum de notations scientifiques.</h2>
+        <p>Un nombre apparaît : tape <b>a</b> et <b>n</b> pour l’écrire sous la forme a × 10ⁿ.
+           L’application vérifie et justifie ; clique sur <b>« Nombre suivant »</b> pour enchaîner.
+           Record de la classe : <b id="flBest0">—</b></p>
+        <button class="btn btn-ink big" id="flStart"><svg class="f" viewBox="0 0 24 24"><use href="#i-play"/></svg>Lancer le défi</button>
+      </div>
+      <div class="panel" id="flGame" hidden>
+        <div class="fl-top">
+          <div class="fl-bar" id="flBar"><i id="flFill"></i></div>
+          <span class="fl-clock" id="flClock">3:00</span>
+          <span class="fl-score">Score<b id="flScore">0</b></span>
+        </div>
+        <div class="panel-tag" style="margin-top:14px">Écris ce nombre en notation scientifique</div>
+        <div class="fl-q" id="flQ"></div>
+        <div class="fl-form">
+          <div class="sci-in">
+            <input id="flA" placeholder="a" autocomplete="off" inputmode="decimal">
+            <span class="mul">×</span><span class="ten">10</span>
+            <sup><input id="flN" placeholder="n" autocomplete="off" inputmode="decimal"></sup>
+          </div>
+          <button class="btn btn-ink" id="flCheck">Vérifier</button>
+        </div>
+        <div class="fl-fb" id="flFb" hidden></div>
+        <div class="fl-next-row">
+          <button class="btn" id="flNext" hidden>Nombre suivant <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+      <div class="fl-end panel" id="flEnd" hidden>
+        <div class="panel-tag">Temps écoulé</div>
+        <div class="fl-big" id="flFinal">0</div>
+        <p id="flMsg"></p>
+        <p class="fl-rec" id="flRec"></p>
+        <div class="fl-actions">
+          <button class="btn btn-ink" id="flAgain"><svg viewBox="0 0 24 24"><use href="#i-reset"/></svg>Rejouer</button>
+          <button class="btn" id="flLab"><svg viewBox="0 0 24 24"><use href="#i-left"/></svg>Retour au labo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>UNE VIRGULE DÉPLACÉE D’UN RANG <span>=</span> UNE PUISSANCE DE DIX · FICHE 9<sup>E</sup> · NOTATION SCIENTIFIQUE</footer>
+</div>
+
+<script>
+'use strict';
+/* ==================== utilitaires ==================== */
+const $  = (s,c=document)=>c.querySelector(s);
+const $$ = (s,c=document)=>[...c.querySelectorAll(s)];
+const rnd = (a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const TH  = '\u202F'; // espace fine des milliers
+const group = s=>s.replace(/\B(?=(\d{3})+(?!\d))/g,TH);
+function fmtFr(s){
+  let [i,d] = s.split('.');
+  if(i.length>1) i = i.replace(/^0+(?=\d)/,'');
+  i = group(i);
+  if(d) d = d.replace(/(\d{3})(?=\d)/g,'$1'+TH);
+  return d ? i+','+d : i;
+}
+const SUPS='⁰¹²³⁴⁵⁶⁷⁸⁹';
+const supTxt = n=>(n<0?'⁻':'')+String(Math.abs(n)).split('').map(c=>SUPS[+c]).join('');
+const signed = n=>(n<0?'−':'+')+Math.abs(n);
+const eq = (a,b)=>Math.abs(a-b)<=1e-9*Math.max(1,Math.abs(b));
+function parseNum(s){
+  s = String(s).trim().replace(/[\s\u00A0\u202F]/g,'').replace(/−/g,'-').replace(',','.');
+  return (s===''||isNaN(+s)) ? null : +s;
+}
+function tenPow(n){return n>=0 ? '1'+'0'.repeat(n) : '0.'+'0'.repeat(-n-1)+'1';}
+function popIt(el){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');}
+/* Décale une mantisse entière (chaîne de chiffres) de k rangs :
+   renvoie l'écriture décimale de (entier mant) × 10^k. */
+function mantShift(mant,k){
+  let s;
+  if(k>=0){ s = mant+'0'.repeat(k); }
+  else{
+    const p = mant.length + k;
+    s = p>0 ? mant.slice(0,p)+'.'+mant.slice(p) : '0.'+'0'.repeat(-p)+mant;
+  }
+  if(s.indexOf('.')>-1) s = s.replace(/0+$/,'').replace(/\.$/,'');
+  return s;
+}
+/* Le nombre affiché vaut a × 10^n, avec a = mant/10^dec :
+   valeur = mant × 10^(n-dec). */
+const buildSrc=(mant,dec,n)=>mantShift(mant, n-dec);
+const aDispOf = mant=>(mant[0]+(mant.length>1?',':'')+mant.slice(1)).replace(/,?0+$/,'').replace(/,$/,'');
+
+/* ==================== navigation par onglets ==================== */
+const views = {lab:$('#view-lab'), train:$('#view-train'), flash:$('#view-flash')};
+ $$('.tab').forEach(b=>b.addEventListener('click',()=>{
+  if(F.on && b.dataset.v!=='flash') stopFlash();
+  $$('.tab').forEach(x=>x.classList.toggle('on',x===b));
+  for(const k in views) views[k].hidden = (k!==b.dataset.v);
+  const v = views[b.dataset.v];
+  v.classList.remove('in'); void v.offsetWidth; v.classList.add('in');
+  if(b.dataset.v==='lab') layoutComma();
+}));
+
+/* ============================================================
+   01 · LE LABO DE LA VIRGULE
+   ============================================================ */
+const ITEMS = [
+  {v:'5837000',    cat:'GÉOGRAPHIE',     label:'Paris → New York',        unit:'m'},
+  {v:'384400',     cat:'ASTRONOMIE',     label:'Distance Terre–Lune',     unit:'km'},
+  {v:'31536000',   cat:'TEMPS',          label:'Une année en secondes',   unit:'s'},
+  {v:'299792458',  cat:'PHYSIQUE',       label:'Vitesse de la lumière',   unit:'m/s'},
+  {v:'7900000000', cat:'POPULATION',     label:'Humains sur Terre',       unit:''},
+  {v:'0.002',      cat:'QUOTIDIEN',      label:'Épaisseur d’une pièce de 1 €', unit:'m'},
+  {v:'0.00008',    cat:'BIOLOGIE',       label:'Épaisseur d’un cheveu',   unit:'m'},
+  {v:'0.0000077',  cat:'BIOLOGIE',       label:'Diamètre d’un globule rouge', unit:'m'},
+  {v:'0.000002',   cat:'MICROBIOLOGIE',  label:'Longueur d’une bactérie', unit:'m'},
+  {v:'0.0000004',  cat:'PHYSIQUE',       label:'Longueur d’onde du violet', unit:'m'},
+];
+const lab = {i:0, digits:'', p:0, p0:0, canonPos:1, canonN:0, mant:'', dragged:false};
+const cellsBox=$('#cells'), commaEl=$('#comma'), stageEl=$('#stage');
+let slotL=[], dragging=false;
+
+function loadItem(i){
+  lab.i = (i+ITEMS.length)%ITEMS.length;
+  const it = ITEMS[lab.i];
+  const isDec = it.v.includes('.');
+  lab.digits  = isDec ? it.v.split('.')[1] : it.v;
+  lab.p0      = isDec ? 0 : lab.digits.length;
+  const fnz   = lab.digits.search(/[1-9]/);
+  lab.canonPos= fnz+1;
+  lab.canonN  = lab.p0 - lab.canonPos;                 // exposant de la réponse
+  let m       = lab.digits.slice(fnz);                 // mantisse : un chiffre + décimales
+  lab.mant    = (m[0]+(m.length>1?',':'')+m.slice(1)).replace(/,?0+$/,'').replace(/,$/,'');
+  lab.p       = lab.p0;
+  $('#labCat').textContent   = it.cat;
+  $('#labLabel').textContent = it.label;
+  $('#labValue').textContent = fmtFr(it.v)+(it.unit?' '+it.unit:'');
+  $('#labCount').textContent = (lab.i+1)+' / '+ITEMS.length;
+  renderCells(); layoutComma(); updateLab();
+  if(!lab.dragged){commaEl.classList.add('wig');}
+}
+function renderCells(){
+  const fnz = lab.digits.search(/[1-9]/);
+  cellsBox.querySelectorAll('.dig').forEach(x=>x.remove());
+  const frag=document.createDocumentFragment();
+  lab.digits.split('').forEach((d,i)=>{
+    const s=document.createElement('span');
+    s.className='dig'+(d==='0'&&i<fnz?' z':'');
+    s.textContent=d; frag.appendChild(s);
+  });
+  cellsBox.appendChild(frag);
+}
+function layoutComma(){
+  const cells=$$('.dig',cellsBox);
+  if(!cells.length) return;
+  const x0=cells[0].offsetLeft;
+  const pitch=cells.length>1 ? cells[1].offsetLeft-x0 : 66;
+  slotL=[x0-58];
+  for(let k=1;k<=lab.digits.length;k++) slotL[k]=x0+k*pitch-17;
+  placeComma();
+}
+function placeComma(){
+  commaEl.style.left=slotL[lab.p]+'px';
+  commaEl.classList.toggle('lead0',lab.p===0);
+  stageEl.setAttribute('aria-valuemax',lab.digits.length);
+  stageEl.setAttribute('aria-valuenow',lab.p);
+  stageEl.setAttribute('aria-valuetext',lab.p+' chiffre(s) avant la virgule ; nombre affiché : '+fmtFr(valueStr()));
+}
+function valueStr(){
+  const d=lab.digits,p=lab.p;
+  let ip=d.slice(0,p).replace(/^0+(?=\d)/,'')||'0';
+  const dp=d.slice(p).replace(/0+$/,'');
+  return dp ? ip+'.'+dp : ip;
+}
+function setP(p){
+  lab.p=Math.max(0,Math.min(lab.digits.length,p));
+  placeComma(); updateLab();
+}
+function updateLab(){
+  const it=ITEMS[lab.i];
+  const n=lab.p0-lab.p;                        // rangs de décalage signés (positif = vers la gauche)
+  const win=(lab.p===lab.canonPos);
+  const j=n;
+  /* Le coefficient affiché est la valeur réellement lue à l'écran :
+     l'équation reste VRAIE à chaque position, et devient la notation
+     scientifique exacte quand la virgule atteint la position gagnante. */
+  $('#expA').textContent=fmtFr(valueStr());
+  $('#expVal').textContent=signed(n); popIt($('#expWrap'));
+  $('#sciExpand').textContent='10'+supTxt(n)+' = '+fmtFr(tenPow(n));
+  $('#stageRead').textContent=fmtFr(valueStr());
+  const jl=$('#jumpLine');
+  if(lab.p===lab.p0){
+    jl.innerHTML='Point de départ — la virgule est à sa place d’origine. Déplace-la !';
+  }else{
+    jl.innerHTML='La virgule a sauté <b>'+Math.abs(j)+' rang'+(Math.abs(j)>1?'s':'')+
+      '</b> vers la '+(j>0?'gauche':'droite')+' <span class="jarrow">⟶</span> exposant <b class="acc">n = '+signed(n)+'</b>';
+  }
+  if(win){
+    jl.innerHTML+='<div class="win-line">'+fmtFr(it.v)+' = '+lab.mant+' × 10'+supTxt(lab.canonN)+'</div>';
+    $('#labGoal').innerHTML='<span class="gk">CONSIGNE</span><span><b>Trouvé !</b> Un seul chiffre non nul ('+
+      lab.mant[0]+') avant la virgule, donc a = '+lab.mant+' ∈ [1 ; 10[.</span>';
+  }else{
+    $('#labGoal').innerHTML='<span class="gk">CONSIGNE</span><span>Attrape la virgule et déplace-la pour qu’il ne reste qu’<b>un seul chiffre non nul</b> avant elle.</span>';
+  }
+  const gpos=Math.max(0,Math.min(100,(n+9)/18*100));
+  $('#gCursor').style.left=gpos+'%';
+  $('#gTarget').style.left=((lab.canonN+9)/18*100)+'%';
+  $('#stamp').classList.toggle('on',win);
+}
+
+/* --- glisser-déposer de la virgule (souris + tactile) --- */
+commaEl.addEventListener('pointerdown',e=>{
+  e.preventDefault();
+  dragging=true; lab.dragged=true;
+  commaEl.setPointerCapture(e.pointerId);
+  commaEl.classList.add('drag'); commaEl.classList.remove('wig');
+  layoutComma();
+});
+commaEl.addEventListener('pointermove',e=>{
+  if(!dragging) return;
+  const rect=cellsBox.getBoundingClientRect();
+  const x=e.clientX-rect.left;
+  let best=0,bd=Infinity;
+  slotL.forEach((sx,i)=>{const d=Math.abs(x-(sx+20));if(d<bd){bd=d;best=i;}});
+  if(best!==lab.p){lab.p=best;placeComma();updateLab();}
+});
+['pointerup','pointercancel'].forEach(ev=>commaEl.addEventListener(ev,()=>{dragging=false;commaEl.classList.remove('drag');}));
+stageEl.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft'){e.preventDefault();setP(lab.p-1);lab.dragged=true;commaEl.classList.remove('wig');}
+  if(e.key==='ArrowRight'){e.preventDefault();setP(lab.p+1);lab.dragged=true;commaEl.classList.remove('wig');}
+});
+ $('#labPrev').addEventListener('click',()=>loadItem(lab.i-1));
+ $('#labNext').addEventListener('click',()=>loadItem(lab.i+1));
+window.addEventListener('resize',layoutComma);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(layoutComma);
+
+/* graduations de la jauge */
+(function(){
+  const g=$('#gauge');
+  for(let m=-9;m<=9;m++){
+    const t=document.createElement('div');
+    t.className='gtick'; t.style.left=((m+9)/18*100)+'%';
+    if(m%3!==0) t.style.height='8px'; else t.style.background='#716855';
+    g.appendChild(t);
+    if(m%3===0){
+      const l=document.createElement('span');
+      l.className='glab'; l.style.left=((m+9)/18*100)+'%'; l.textContent=m;
+      g.appendChild(l);
+    }
+  }
+})();
+
+/* ============================================================
+   02 · ENTRAÎNEMENT — un seul mode : grands ET petits nombres
+   ============================================================ */
+const T={no:0,score:0,streak:0,ok:0,tot:0,hist:[],cur:null,lock:false,prevSrc:''};
+const qBody=$('#qBody'), qForm=$('#qForm'), qFb=$('#qFb');
+
+function genMant(dMin,dMax){
+  const dec=rnd(dMin,dMax);
+  let digs='';
+  if(dec>0){ do{ digs=''; for(let i=0;i<dec;i++) digs+=rnd(0,9); }while(/^0*$/.test(digs)); }
+  return {mant:String(rnd(1,9))+digs, dec};
+}
+/* Exposant au hasard : positif (grand nombre) ou négatif (petit nombre) */
+function genQuestion(){
+  const n=(Math.random()<0.5?1:-1)*rnd(2,9);
+  const {mant,dec}=genMant(0,3);
+  const src=buildSrc(mant,dec,n);
+  if(src===T.prevSrc) return genQuestion();
+  T.prevSrc=src;
+  return {src, mant, dec, n};
+}
+function newQ(){
+  T.lock=false; T.no++;
+  $('#qNo').textContent='NOMBRE N° '+T.no;
+  qFb.hidden=true; qFb.className='q-fb';
+  T.cur=genQuestion();
+  qBody.innerHTML=fmtFr(T.cur.src)+' <span class="q-tail">→ a × 10ⁿ</span>';
+  qForm.innerHTML=
+    '<div class="sci-in"><input id="fA" placeholder="a" autocomplete="off" inputmode="decimal">'+
+    '<span class="mul">×</span><span class="ten">10</span><sup><input id="fN" placeholder="n" autocomplete="off"></sup></div>'+
+    '<button class="btn btn-ink" id="fCheck">Vérifier</button>';
+  $('#fCheck').addEventListener('click',checkAnswer);
+  setTimeout(()=>$('#fA').focus(),30);
+}
+function checkAnswer(){
+  if(T.lock) return;
+  const c=T.cur;
+  const a=parseNum($('#fA').value), nn=parseNum($('#fN').value);
+  if(a===null||nn===null){
+    if(a===null)$('#fA').classList.add('shake');
+    if(nn===null)$('#fN').classList.add('shake');
+    setTimeout(()=>{$('#fA')&&$('#fA').classList.remove('shake');$('#fN')&&$('#fN').classList.remove('shake');},350);
+    return;
+  }
+  const aC=parseFloat(c.mant)/10**c.dec;   // le facteur a attendu (valeur numérique)
+  const aOk=eq(a,aC), nOk=eq(nn,c.n);
+  const aD=aDispOf(c.mant);
+  const k=Math.abs(c.n), dir=c.n>0?'gauche':'droite';
+  /* Justification pas à pas */
+  const steps=[
+    'Le premier chiffre non nul de '+fmtFr(c.src)+' est <b>'+c.mant[0]+'</b>.',
+    'On place la virgule juste après lui : <b>'+aD+'</b> — c’est le facteur a, bien entre 1 et 10.',
+    'Pour retrouver le nombre, la virgule doit sauter <b>'+k+' rang'+(k>1?'s':'')+
+      '</b> vers la '+dir+' → n = '+signed(c.n)+'.'
+  ];
+  let hint='';
+  if(!aOk&&(a<1||a>=10))
+    hint='Le facteur a doit vérifier 1 ≤ a < 10 : un seul chiffre non nul avant la virgule. ';
+  else if(!nOk&&((nn>0)!==(c.n>0)))
+    hint='Le signe de n n’est pas bon : '+(c.n<0?'un nombre plus petit que 1 donne un exposant négatif. ':'un nombre plus grand que 10 donne un exposant positif. ');
+  else hint='Recompte bien les rangs dont la virgule s’est déplacée. ';
+  verdict(aOk&&nOk,steps,aD+' × 10<sup>'+signed(c.n)+'</sup>',hint);
+}
+qForm.addEventListener('keydown',e=>{
+  if(e.key!=='Enter') return;
+  if(T.lock){const n=$('#fNext'); n&&n.click();}
+  else{const b=$('#fCheck'); b&&b.click();}
+});
+function verdict(good,steps,correctHTML,hint){
+  T.lock=true; T.tot++;
+  if(good){T.ok++;T.score+=10;T.streak++;}else T.streak=0;
+  T.hist.push(good); if(T.hist.length>14)T.hist.shift();
+  updateSide();
+  qFb.className='q-fb '+(good?'good':'bad');
+  qFb.innerHTML=
+    '<div class="fb-t"><svg viewBox="0 0 24 24"><use href="#i-'+(good?'check':'x')+'"/></svg>'+
+    (good?'Exact ! +10 points':(hint||'Pas tout à fait…'))+'</div>'+
+    '<ol class="steps">'+steps.map(s=>'<li>'+s+'</li>').join('')+'</ol>'+
+    (good?'':'<div class="fb-a">Réponse : '+correctHTML+'</div>')+
+    '<button class="btn btn-ink" id="fNext">Nombre suivant <svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></button>';
+  qFb.hidden=false;
+  $$('#qForm input, #qForm button').forEach(x=>x.disabled=true);
+  $('#fNext').addEventListener('click',newQ);
+  $('#fNext').focus();
+}
+function updateSide(){
+  $('#tScore').textContent=T.score;
+  $('#tStreak').textContent=T.streak;
+  $('#tAcc').textContent=T.tot?Math.round(T.ok/T.tot*100)+' %':'—';
+  $('#tDots').innerHTML=T.hist.map(g=>'<i class="'+(g?'g':'b')+'"></i>').join('');
+}
+
+/* ============================================================
+   03 · DÉFI ÉCLAIR — 3 MINUTES
+   ============================================================ */
+const DUREE=180;   // 3 minutes
+const F={on:false,t:DUREE,score:0,tot:0,lock:false,timer:null,best:0,cur:null,prevSrc:''};
+try{F.best=+localStorage.getItem('psd-best-180')||0;}catch(e){}
+ $('#flBest0').textContent=F.best?F.best+' bonnes réponses':'aucun pour l’instant — à toi de jouer';
+
+function flashQuestion(){
+  const {mant,dec}=genMant(0,2);
+  const n=(Math.random()<0.5?1:-1)*rnd(2,6);
+  const src=buildSrc(mant,dec,n);
+  if(src===F.prevSrc) return flashQuestion();
+  F.prevSrc=src;
+  return {src, mant, dec, n};
+}
+/* Chrono au format m:ss */
+function clockTxt(t){
+  const m=Math.floor(t/60), s=Math.floor(t%60);
+  return m+':'+String(s).padStart(2,'0');
+}
+function nextF(){
+  if(!F.on) return;
+  F.lock=false;
+  F.cur=flashQuestion();
+  $('#flQ').textContent=fmtFr(F.cur.src);
+  $('#flFb').hidden=true; $('#flFb').className='fl-fb';
+  $('#flNext').hidden=true;
+  $('#flA').disabled=false; $('#flN').disabled=false;
+  $('#flA').value=''; $('#flN').value='';
+  $('#flA').focus();
+}
+function checkF(){
+  if(!F.on||F.lock) return;
+  const c=F.cur;
+  const a=parseNum($('#flA').value), nn=parseNum($('#flN').value);
+  if(a===null||nn===null){
+    if(a===null)$('#flA').classList.add('shake');
+    if(nn===null)$('#flN').classList.add('shake');
+    setTimeout(()=>{$('#flA')&&$('#flA').classList.remove('shake');$('#flN')&&$('#flN').classList.remove('shake');},350);
+    return;
+  }
+  F.lock=true; F.tot++;
+  $('#flA').disabled=true; $('#flN').disabled=true;
+  const aC=parseFloat(c.mant)/10**c.dec;
+  const good=eq(a,aC)&&eq(nn,c.n);
+  const aD=aDispOf(c.mant);
+  const k=Math.abs(c.n), dir=c.n>0?'gauche':'droite';
+  const just='virgule sautée de '+k+' rang'+(k>1?'s':'')+' vers la '+dir+' → n = '+signed(c.n)+' ; a = '+aD+' ∈ [1 ; 10[';
+  if(good){F.score++;$('#flScore').textContent=F.score;}
+  const fb=$('#flFb');
+  fb.className='fl-fb '+(good?'good':'bad');
+  fb.innerHTML=(good?'✓ EXACT · ':'✗ '+fmtFr(c.src)+' = '+aD+' × 10'+supTxt(c.n)+' · ')+just;
+  fb.hidden=false;
+  const nx=$('#flNext'); nx.hidden=false; nx.focus();
+}
+ $('#flA').addEventListener('keydown',e=>{if(e.key==='Enter')checkF();});
+ $('#flN').addEventListener('keydown',e=>{if(e.key==='Enter')checkF();});
+ $('#flCheck').addEventListener('click',checkF);
+ $('#flNext').addEventListener('click',nextF);
+
+function startFlash(){
+  F.on=true; F.t=DUREE; F.score=0; F.tot=0; F.prevSrc='';
+  $('#flScore').textContent='0';
+  $('#flClock').textContent=clockTxt(F.t);
+  $('#flIntro').hidden=true; $('#flEnd').hidden=true; $('#flGame').hidden=false;
+  $('#flFill').style.width='100%'; $('#flBar').classList.remove('low');
+  nextF();
+  F.timer=setInterval(()=>{
+    F.t-=0.1;
+    if(F.t<=0){F.t=0;endFlash();return;}
+    $('#flFill').style.width=(F.t/DUREE*100)+'%';
+    $('#flClock').textContent=clockTxt(F.t);
+    $('#flBar').classList.toggle('low',F.t<30);   // clignote dans les 30 dernières secondes
+  },100);
+}
+function endFlash(){
+  clearInterval(F.timer); F.on=false;
+  $('#flGame').hidden=true; $('#flEnd').hidden=false;
+  $('#flA').disabled=true; $('#flN').disabled=true; $('#flNext').hidden=true;
+  $('#flFinal').textContent=F.score;
+  const s=F.score, ess=F.tot;
+  $('#flMsg').textContent=
+    (s>=25?'Maître des puissances ! La virgule n’a plus aucun secret pour toi.':
+     s>=15?'Excellent rythme — les ordres de grandeur sont bien là.':
+     s>=8 ?'Bien ! Encore un peu d’entraînement pour automatiser tout ça.':
+          'Ça se travaille : retourne faire un tour dans le labo de la virgule.')
+    +(ess>0?' ('+s+' bonne'+(s>1?'s':'')+' réponse'+(s>1?'s':'')+' sur '+ess+' essai'+(ess>1?'s':'')+')':'');
+  if(s>F.best){
+    F.best=s;
+    try{localStorage.setItem('psd-best-180',s);}catch(e){}
+    $('#flRec').textContent='★ NOUVEAU RECORD — '+s+' bonnes réponses';
+    $('#flBest0').textContent=F.best+' bonnes réponses';
+  }else{
+    $('#flRec').textContent='Record en cours : '+F.best+' bonnes réponses';
+  }
+}
+function stopFlash(){
+  clearInterval(F.timer); F.on=false;
+  $('#flGame').hidden=true; $('#flIntro').hidden=false; $('#flEnd').hidden=true;
+}
+ $('#flStart').addEventListener('click',startFlash);
+ $('#flAgain').addEventListener('click',startFlash);
+ $('#flLab').addEventListener('click',()=>$('[data-v="lab"]').click());
+
+/* ==================== démarrage ==================== */
+loadItem(0);
+newQ();
+</script>
+</body>
+</html>
